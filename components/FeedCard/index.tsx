@@ -26,9 +26,8 @@ export const FeedCard: React.FC = () => {
         <div className="col-span-11">
           <h5 className="">Koyalkar Aditya</h5>
           <p>
-            This i the content contentThis i the content contentThis i the
-            content contentThis i the content contentThis i the content
-            contentThis i the content content
+            Just had the most amazing cup of coffee . Its like a hug in a
+            mug.CoffeeLover #MorningFuel
           </p>
 
           <div
