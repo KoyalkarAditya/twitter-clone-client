@@ -1,56 +1,29 @@
+"use client";
 import { FaXTwitter } from "react-icons/fa6";
-import { GoHomeFill } from "react-icons/go";
-import { CiSearch } from "react-icons/ci";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { HiOutlineMail } from "react-icons/hi";
-import { PiBookmarkSimple } from "react-icons/pi";
-import { CiUser } from "react-icons/ci";
 import { FeedCard } from "@/components/FeedCard";
-import { CiCircleMore } from "react-icons/ci";
-import { BiMoney } from "react-icons/bi";
-export default function HomePage() {
-  interface TwitterSidebarButton {
-    title: string;
-    icon: React.ReactNode;
+import { useCurrentUser } from "@/hooks/user";
+import { sideBarMenuItem } from "@/components/sideBarMenuItem";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+import { FiUser } from "react-icons/fi";
+import { CiImageOn } from "react-icons/ci";
+import { useCallback } from "react";
+export default function Home() {
+  const { user } = useCurrentUser();
+  if (!user) {
+    redirect("/");
   }
-  const sideBarMenuItem: TwitterSidebarButton[] = [
-    {
-      title: "Home",
-      icon: <GoHomeFill />,
-    },
-    {
-      title: "Explore",
-      icon: <CiSearch />,
-    },
-    {
-      title: "Notifications",
-      icon: <IoNotificationsOutline />,
-    },
-    {
-      title: "Messages",
-      icon: <HiOutlineMail />,
-    },
-    {
-      title: "BookMarks",
-      icon: <PiBookmarkSimple />,
-    },
-    {
-      title: "Profile",
-      icon: <CiUser />,
-    },
-    {
-      title: "Blue",
-      icon: <BiMoney />,
-    },
-    {
-      title: "More",
-      icon: <CiCircleMore />,
-    },
-  ];
+  const handleSelectImage = useCallback(() => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+  }, []);
+  console.log(user);
   return (
     <div>
       <div className=" grid grid-cols-12 h-screen w-screen px-40">
-        <div className=" col-span-3  justify-start   pr-4">
+        <div className=" col-span-3  justify-start   pr-4 relative">
           <div className="h-fit cursor-pointer w-fit ml-2 text-3xl  hover:bg-gray-800 transition-all rounded-full p-2">
             <FaXTwitter />
           </div>
@@ -72,14 +45,70 @@ export default function HomePage() {
               Post
             </button>
           </div>
+          {user && (
+            <div className="absolute flex gap-2  bottom-5 items-center p-3 ">
+              {user && user.profileImageURL && (
+                <Image
+                  className=" rounded-full"
+                  src={user.profileImageURL}
+                  alt="profile"
+                  width={50}
+                  height={50}
+                />
+              )}
+              <div>
+                <h3 className=" text-base font-semibold">
+                  {user.firstName} {user.lastName}
+                </h3>
+                <h3 className=" text-sm">@{user.lastName}</h3>
+              </div>
+            </div>
+          )}
         </div>
         <div className=" col-span-6  border-gray-600 border-r-[1px] border-l-[1px]">
+          <div>
+            <div className=" grid grid-cols-12 p-5 gap-2 hover:bg-gray-900 hover:bg-opacity-40 transition-all  border-gray-900 border-b-[1px] border-t-[1px]">
+              <div className=" col-span-1">
+                {user.profileImageURL ? (
+                  <Image
+                    width={50}
+                    height={50}
+                    src={user.profileImageURL}
+                    alt="profile-pic"
+                    className=" rounded-full"
+                  />
+                ) : (
+                  <FiUser className="text-3xl" />
+                )}
+              </div>
+              <div className="col-span-11">
+                <textarea
+                  name=""
+                  placeholder="What is Happening?!"
+                  className=" bg-transparent w-full text-xl border-b border-gray-600"
+                  id=""
+                ></textarea>
+                <div className=" flex justify-between p-3 items-center">
+                  <div>
+                    <CiImageOn
+                      onClick={handleSelectImage}
+                      className="text-xl cursor-pointer"
+                    />
+                  </div>
+                  <div>
+                    <button className=" bg-[#1d9bf0] font-semibold py-1 px-4 rounded-full cursor-pointer">
+                      Post
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <FeedCard />
           <FeedCard />
           <FeedCard />
           <FeedCard />
         </div>
-        <div className=" col-span-3"></div>
       </div>
     </div>
   );

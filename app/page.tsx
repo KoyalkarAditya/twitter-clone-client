@@ -1,14 +1,6 @@
 "use client";
 import { FaXTwitter } from "react-icons/fa6";
-import { GoHomeFill } from "react-icons/go";
-import { CiSearch } from "react-icons/ci";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { HiOutlineMail } from "react-icons/hi";
-import { PiBookmarkSimple } from "react-icons/pi";
-import { CiUser } from "react-icons/ci";
 import { FeedCard } from "@/components/FeedCard";
-import { CiCircleMore } from "react-icons/ci";
-import { BiMoney } from "react-icons/bi";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
@@ -16,49 +8,15 @@ import { graphqlClient } from "@/clients/api";
 import { verifyUserGoogleTokenQuery } from "@/graphql/queries/user";
 import { useCurrentUser } from "@/hooks/user";
 import { useQueryClient } from "@tanstack/react-query";
+import { sideBarMenuItem } from "@/components/sideBarMenuItem";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 export default function Home() {
   const { user } = useCurrentUser();
-  const queryClient = useQueryClient();
-  console.log(user);
-  interface TwitterSidebarButton {
-    title: string;
-    icon: React.ReactNode;
+  if (user) {
+    redirect("/home");
   }
-  const sideBarMenuItem: TwitterSidebarButton[] = [
-    {
-      title: "Home",
-      icon: <GoHomeFill />,
-    },
-    {
-      title: "Explore",
-      icon: <CiSearch />,
-    },
-    {
-      title: "Notifications",
-      icon: <IoNotificationsOutline />,
-    },
-    {
-      title: "Messages",
-      icon: <HiOutlineMail />,
-    },
-    {
-      title: "BookMarks",
-      icon: <PiBookmarkSimple />,
-    },
-    {
-      title: "Profile",
-      icon: <CiUser />,
-    },
-    {
-      title: "Blue",
-      icon: <BiMoney />,
-    },
-    {
-      title: "More",
-      icon: <CiCircleMore />,
-    },
-  ];
+  const queryClient = useQueryClient();
   const handleLoginWithGoogle = useCallback(
     async (cred: CredentialResponse) => {
       const googleToken = cred.credential;
