@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { sideBarMenuItem } from "@/components/sideBarMenuItem";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { SampleFeedCard } from "@/components/FeedCard/SampleFeed";
 export default function Home() {
   const { user } = useCurrentUser();
   if (user) {
@@ -64,29 +65,28 @@ export default function Home() {
           </div>
           {user && (
             <div className="absolute flex gap-2  bottom-5 items-center p-3 ">
-              {user && user.profileImageURL && (
-                <Image
-                  className=" rounded-full"
-                  src={user.profileImageURL}
-                  alt="profile"
-                  width={50}
-                  height={50}
-                />
-              )}
+              <Image
+                className=" rounded-full"
+                src={
+                  "https://pbs.twimg.com/profile_images/1788655525196070913/UFnOzVKB_400x400.jpg"
+                }
+                alt="profile"
+                width={50}
+                height={50}
+              />
+
               <div>
-                <h3 className=" text-base font-semibold">
-                  {user.firstName} {user.lastName}
-                </h3>
-                <h3 className=" text-sm">@{user.lastName}</h3>
+                <h3 className=" text-base font-semibold">Koyalkar Aditya</h3>
+                <h3 className=" text-sm">@koyalkaaditya</h3>
               </div>
             </div>
           )}
         </div>
         <div className=" col-span-6  border-gray-600 border-r-[1px] border-l-[1px]">
-          <FeedCard />
-          <FeedCard />
-          <FeedCard />
-          <FeedCard />
+          <SampleFeedCard />
+          <SampleFeedCard />
+          <SampleFeedCard />
+          <SampleFeedCard />
         </div>
         {!user && (
           <div className=" col-span-3">

@@ -8,11 +8,13 @@ import { redirect } from "next/navigation";
 import { FiUser } from "react-icons/fi";
 import { CiImageOn } from "react-icons/ci";
 import { useCallback } from "react";
+import { useGetAllTweets } from "@/hooks/tweet";
 export default function Home() {
   const { user } = useCurrentUser();
   if (!user) {
     redirect("/");
   }
+  const { tweets = [], isLoading } = useGetAllTweets();
   const handleSelectImage = useCallback(() => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -20,6 +22,7 @@ export default function Home() {
     input.click();
   }, []);
   console.log(user);
+
   return (
     <div>
       <div className=" grid grid-cols-12 h-screen w-screen px-40">
@@ -104,10 +107,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <FeedCard />
-          <FeedCard />
-          <FeedCard />
-          <FeedCard />
+          {tweets.map((tweet) =>
+            tweet ? <FeedCard key={tweet?.id} data={tweet} /> : null
+          )}
         </div>
       </div>
     </div>
