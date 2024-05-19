@@ -18,11 +18,11 @@ export const FeedCard: React.FC<FeedCardProps> = (props) => {
     <div>
       <div className=" grid grid-cols-12 p-5 gap-2 hover:bg-gray-900 hover:bg-opacity-40 transition-all cursor-pointer border-gray-900 border-b-[1px] border-t-[1px]">
         <div className=" col-span-1">
-          {data.imageURL && (
+          {data.author?.profileImageURL && (
             <Image
               width={50}
               height={50}
-              src={data.imageURL}
+              src={data.author?.profileImageURL}
               alt="profile-pic"
               className=" rounded-full"
             />

@@ -2,7 +2,7 @@
 import { FaXTwitter } from "react-icons/fa6";
 import { FeedCard } from "@/components/FeedCard";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { graphqlClient } from "@/clients/api";
 import { verifyUserGoogleTokenQuery } from "@/graphql/queries/user";
@@ -12,11 +12,17 @@ import { sideBarMenuItem } from "@/components/sideBarMenuItem";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { SampleFeedCard } from "@/components/FeedCard/SampleFeed";
+import { Loader } from "@/components/Loader";
 export default function Home() {
-  const { user } = useCurrentUser();
-  if (user) {
-    redirect("/home");
-  }
+  const { user, isLoading } = useCurrentUser();
+
+  useEffect(() => {
+    if (user) {
+      toast.success("welcome back!!");
+      redirect("/home");
+    }
+  }, [user]);
+
   const queryClient = useQueryClient();
   const handleLoginWithGoogle = useCallback(
     async (cred: CredentialResponse) => {
@@ -38,6 +44,9 @@ export default function Home() {
     },
     []
   );
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div>
       <div className=" grid grid-cols-12 h-screen w-screen px-40">
