@@ -6,6 +6,7 @@ import { GoUpload } from "react-icons/go";
 import { CiBookmark } from "react-icons/ci";
 import { Quicksand } from "next/font/google";
 import { Tweet } from "@/gql/graphql";
+import Link from "next/link";
 const quicksand = Quicksand({
   subsets: ["latin"],
 });
@@ -29,9 +30,9 @@ export const FeedCard: React.FC<FeedCardProps> = (props) => {
           )}
         </div>
         <div className="col-span-11">
-          <h5 className="">
+          <Link href={`/${data.author?.id}`} className="">
             {data.author?.firstName} {data.author?.lastName}
-          </h5>
+          </Link>
           <p>{data.content}</p>
 
           <div

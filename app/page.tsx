@@ -8,13 +8,12 @@ import { verifyUserGoogleTokenQuery } from "@/graphql/queries/user";
 import { useCurrentUser } from "@/hooks/user";
 import { useQueryClient } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
-import { Loader } from "@/components/Loader";
+
 export default function Home() {
   const { user, isLoading } = useCurrentUser();
 
   useEffect(() => {
     if (user) {
-      toast.success("welcome back!!");
       redirect("/home");
     }
   }, [user]);
@@ -40,9 +39,7 @@ export default function Home() {
     },
     []
   );
-  if (isLoading) {
-    return <Loader />;
-  }
+
   return (
     <div className="">
       <div className="flex  items-center  justify-center h-screen">

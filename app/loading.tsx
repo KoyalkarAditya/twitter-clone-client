@@ -1,4 +1,4 @@
-export const Loader = () => {
+const Loader = () => {
   return (
     <div
       role="status"
@@ -87,3 +87,5 @@ export const Loader = () => {
     </div>
   );
 };
+
+export default Loader;
