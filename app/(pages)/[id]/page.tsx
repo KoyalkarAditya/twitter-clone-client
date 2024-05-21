@@ -8,14 +8,22 @@ import Image from "next/image";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { ProfileImgSVG } from "@/components/UserProfileSVG";
 import Link from "next/link";
+import Page404 from "@/components/Page404";
+import Loader from "@/app/loading";
 
 export default function ProfilePage() {
   const params = useParams();
-  const router = useRouter();
+
   const { id } = params;
 
-  const { user } = useGetUserById(id as string);
-
+  const { user, isLoading } = useGetUserById(id as string);
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (!user) {
+    return <Page404 />;
+  }
+  console.log(user);
   return (
     <div className=" col-span-9 sm:col-span-6  border-gray-600 border-r-[1px] border-l-[1px]">
       <nav className=" flex p-2">

@@ -42,6 +42,7 @@ query GetUserById($id : ID!){
         content
         imageURL
         author {
+          id
           firstName,
           lastName,
           profileImageURL
