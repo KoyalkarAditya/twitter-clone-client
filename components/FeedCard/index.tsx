@@ -34,7 +34,14 @@ export const FeedCard: React.FC<FeedCardProps> = (props) => {
             {data.author?.firstName} {data.author?.lastName}
           </Link>
           <p>{data.content}</p>
-
+          {data.imageURL && (
+            <Image
+              src={data.imageURL}
+              alt="Tweet image"
+              width={400}
+              height={400}
+            />
+          )}
           <div
             className={`${quicksand.className} flex w-[90%] justify-between mt-5 text-lg text-slate-500 font-semibold `}
           >
