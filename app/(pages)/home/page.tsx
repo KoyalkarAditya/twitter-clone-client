@@ -71,6 +71,8 @@ export default function Home() {
       content,
       imageURL,
     });
+    setImageURL("");
+    setContent("");
   }, [content, mutate, imageURL]);
 
   return (
