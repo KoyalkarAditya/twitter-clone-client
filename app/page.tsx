@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { graphqlClient } from "@/clients/api";
 import { verifyUserGoogleTokenQuery } from "@/graphql/queries/user";
 import { useCurrentUser } from "@/hooks/user";
-import { useQueryClient } from "@tanstack/react-query";
+import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
 export default function Home() {
@@ -35,7 +35,10 @@ export default function Home() {
       if (verifyGoogleToken) {
         localStorage.setItem("token", verifyGoogleToken);
       }
-      await queryClient.invalidateQueries({ queryKey: ["current-user"] });
+      queryClient.invalidateQueries([
+        "current-user",
+        "get-user-by-id",
+      ] as InvalidateQueryFilters);
     },
     []
   );

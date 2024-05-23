@@ -12,7 +12,7 @@ import Page404 from "@/components/Page404";
 import Loader from "@/app/loading";
 import { useCallback, useMemo } from "react";
 import { graphqlClient } from "@/clients/api";
-import { QueryKey } from "@tanstack/react-query";
+import { InvalidateQueryFilters, QueryKey } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   followUserMutation,
@@ -35,18 +35,20 @@ export default function ProfilePage() {
     await graphqlClient.request(followUserMutation, {
       to: user?.id,
     });
-    await queryClient.invalidateQueries({
-      queryKey: ["current-user", "get-user-by-id"],
-    });
+    queryClient.invalidateQueries([
+      "current-user",
+      "get-user-by-id",
+    ] as InvalidateQueryFilters);
   }, [user?.id, queryClient]);
 
   const handleUnfollowUser = useCallback(async () => {
     await graphqlClient.request(unfollowUserMutation, {
       to: user?.id,
     });
-    await queryClient.invalidateQueries({
-      queryKey: ["current-user", "get-user-by-id"],
-    });
+    queryClient.invalidateQueries([
+      "current-user",
+      "get-user-by-id",
+    ] as InvalidateQueryFilters);
   }, [user?.id, queryClient]);
 
   if (isLoading) {
