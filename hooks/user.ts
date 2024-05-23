@@ -13,7 +13,6 @@ export const useCurrentUser = () => {
 };
 
 export const useGetUserById = (id: string) => {
-  console.log(id);
   const query = useQuery<{ getUserById: User }>({
     queryKey: ["get-user-by-id"],
     queryFn: () =>

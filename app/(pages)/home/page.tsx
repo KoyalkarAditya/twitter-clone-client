@@ -25,7 +25,7 @@ export default function Home() {
     return async (event: Event) => {
       event.preventDefault();
       const file: File | null | undefined = input.files?.item(0);
-      console.log(file);
+
       if (!file) {
         return;
       }

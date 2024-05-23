@@ -10,7 +10,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const { user, isLoading } = useCurrentUser();
+  const { user } = useCurrentUser();
 
   useEffect(() => {
     if (user) {
