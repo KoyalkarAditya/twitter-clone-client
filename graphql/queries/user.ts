@@ -37,6 +37,13 @@ export const getCurrentUserQuery = `#graphql
           profileImageURL
         }
       }
+      recommendedUsers
+      {
+        id
+        firstName
+        lastName
+        profileImageURL
+      }
     }
   }
 `;
