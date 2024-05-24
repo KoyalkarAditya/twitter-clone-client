@@ -57,7 +57,7 @@ export default function ProfilePage() {
   if (!user) {
     return <Page404 />;
   }
-  console.log(user);
+
   return (
     <div className=" col-span-9 sm:col-span-6  border-gray-600 border-r-[1px] border-l-[1px]">
       <nav className=" flex p-2">
