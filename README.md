@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Twitter Clone Application
 
-## Getting Started
+This project is a Twitter clone built using modern technologies such as Next.js, Prisma, PostgreSQL, GraphQL, Redis, and more. It includes features like CRUD operations on tweets, image upload, user recommendation system, caching, rate limiting, and follow/unfollow functionalities.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- User Authentication
+- CRUD operations on tweets
+- Image upload for tweets
+- User recommendation system
+- Follow and unfollow functionality
+- Caching using Redis
+- Rate limiting using Redis
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend:** Next.js
+- **Backend:** Node.js, GraphQL
+- **Database:** PostgreSQL
+- **ORM:** Prisma
+- **Caching and Rate Limiting:** Redis
+- **Image Upload:** S3
+- **Deployment:** Vercel (for frontend), AWS (for backend)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Usage
 
-## Learn More
+- **Sign Up / Sign In:** Create a new account or log in with existing credentials.
+- **Create a Tweet:** Post a new tweet with or without an image.
+- **Read Tweets:** View a list of all tweets, including those from followed users.
+- **Update Tweet:** Edit your existing tweets.
+- **Delete Tweet:** Remove your tweets.
+- **Follow/Unfollow Users:** Follow or unfollow other users to see their tweets in your feed.
+- **User Recommendations:** Get recommendations for users to follow.
+- **Rate Limiting:** Prevent abuse by limiting the number of requests a user can make.
+- **Caching:** Improve performance by caching frequently requested data.
 
-To learn more about Next.js, take a look at the following resources:
+## server repo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- https://github.com/KoyalkarAditya/twitter-clone-server
