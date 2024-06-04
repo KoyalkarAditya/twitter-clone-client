@@ -19,6 +19,7 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTweet?: Maybe<Tweet>;
+  deleteTweet?: Maybe<Scalars['Boolean']['output']>;
   followUser?: Maybe<Scalars['Boolean']['output']>;
   unfollowUser?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -26,6 +27,11 @@ export type Mutation = {
 
 export type MutationCreateTweetArgs = {
   payload?: InputMaybe<CreateTweetData>;
+};
+
+
+export type MutationDeleteTweetArgs = {
+  tweetId?: InputMaybe<Scalars['String']['input']>;
 };
 
 

@@ -10,14 +10,16 @@ import { ProfileImgSVG } from "@/components/UserProfileSVG";
 import Link from "next/link";
 import Page404 from "@/components/Page404";
 import Loader from "@/app/loading";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { graphqlClient } from "@/clients/api";
 import { InvalidateQueryFilters, QueryKey } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
+import { SlOptions } from "react-icons/sl";
 import {
   followUserMutation,
   unfollowUserMutation,
 } from "@/graphql/mutations/user";
+import { useDeleteTweet } from "@/hooks/tweet";
 
 export default function ProfilePage() {
   const params = useParams();
@@ -25,7 +27,8 @@ export default function ProfilePage() {
   const queryClient = useQueryClient();
   const { user, isLoading } = useGetUserById(id as string);
   const { user: currUser } = useCurrentUser();
-
+  const [selectedTweetId, setSelectedTweetId] = useState<null | string>(null);
+  const { mutate } = useDeleteTweet();
   const amIFollowing = useMemo(() => {
     return (
       currUser?.following?.findIndex((el) => el?.id == user?.id) ?? -1 >= 0
@@ -51,6 +54,13 @@ export default function ProfilePage() {
     ] as InvalidateQueryFilters);
   }, [user?.id, queryClient]);
 
+  const handleDeleteTweet = useCallback((tweetId: string) => {
+    if (!tweetId) {
+      return;
+    }
+    mutate(tweetId);
+    queryClient.invalidateQueries(["current-user"] as InvalidateQueryFilters);
+  }, []);
   if (isLoading) {
     return <Loader />;
   }
@@ -125,7 +135,29 @@ export default function ProfilePage() {
       </div>
       <div>
         {user?.tweets?.map((tweet) => (
-          <FeedCard data={tweet as Tweet} key={tweet?.id} />
+          <div key={tweet?.id} className=" flex justify-between">
+            <FeedCard data={tweet as Tweet} />
+            <div
+              onClick={() => {
+                if (selectedTweetId === tweet?.id) {
+                  setSelectedTweetId(null);
+                } else setSelectedTweetId(tweet?.id as string);
+              }}
+              className=" mr-2 cursor-pointer border-gray-900 border-b-[1px] border-t-[1px]"
+            >
+              <SlOptions className=" text-slate-500" />
+            </div>
+            <div className=" relative">
+              {tweet?.id == selectedTweetId && (
+                <div
+                  onClick={() => handleDeleteTweet(tweet?.id as string)}
+                  className=" absolute right-10  top-2 rounded-lg  px-1 py-1 bg-transparent border-2 border-slate-500 text-sm cursor-pointer"
+                >
+                  delete
+                </div>
+              )}
+            </div>
+          </div>
         ))}
       </div>
     </div>

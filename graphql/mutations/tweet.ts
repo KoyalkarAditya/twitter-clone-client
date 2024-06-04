@@ -5,3 +5,9 @@ export const createTweetMutation = `#graphql
     }
   }
 `;
+export const deleteTweetMutation = `#graphql
+mutation deleteTweet($tweetId : String)
+{
+   deleteTweet(tweetId: $tweetId)
+}
+`;
