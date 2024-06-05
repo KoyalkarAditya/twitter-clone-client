@@ -3,6 +3,7 @@ import { CreateTweetData, Tweet } from "@/gql/graphql";
 import {
   createTweetMutation,
   deleteTweetMutation,
+  updateLikeMutation,
 } from "@/graphql/mutations/tweet";
 
 import { getAllTweetsQuery } from "@/graphql/queries/tweet";
@@ -42,6 +43,23 @@ export const useDeleteTweet = () => {
       toast.success("Tweet Deleted Successfully", { id: "2" });
     },
     onMutate: () => toast.loading("Deleting Tweet", { id: "2" }),
+  });
+  return mutation;
+};
+
+export const useUpdateLike = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async (tweetId: string) => {
+      graphqlClient.request(updateLikeMutation, {
+        tweetId,
+      });
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["all-tweets"] });
+      toast.success("Like updated Successfully", { id: "3" });
+    },
+    onMutate: () => toast.loading("Loading...", { id: "3" }),
   });
   return mutation;
 };

@@ -7,14 +7,34 @@ import { CiBookmark } from "react-icons/ci";
 import { Quicksand } from "next/font/google";
 import { Tweet } from "@/gql/graphql";
 import Link from "next/link";
+import { useCallback, useMemo } from "react";
+import { useUpdateLike } from "@/hooks/tweet";
+import { InvalidateQueryFilters, useQueryClient } from "@tanstack/react-query";
+
 const quicksand = Quicksand({
   subsets: ["latin"],
 });
 interface FeedCardProps {
   data: Tweet;
+  currUserId?: String;
 }
 export const FeedCard: React.FC<FeedCardProps> = (props) => {
-  const { data } = props;
+  const { data, currUserId } = props;
+  const queryClient = useQueryClient();
+  const { mutate } = useUpdateLike();
+
+  const likedByCurrUser = useMemo(() => {
+    return data.likes?.findIndex((user) => user.id == currUserId);
+  }, [data]);
+
+  const handleUpdateLike = useCallback(
+    (id: string) => {
+      mutate(id);
+      queryClient.invalidateQueries(["current-user"] as InvalidateQueryFilters);
+    },
+    [likedByCurrUser, data]
+  );
+
   return (
     <div>
       <div className=" grid grid-cols-12 p-5 gap-2 hover:bg-gray-900 hover:bg-opacity-40 transition-all cursor-pointer border-gray-900 border-b-[1px] border-t-[1px]">
@@ -51,8 +71,13 @@ export const FeedCard: React.FC<FeedCardProps> = (props) => {
             <div>
               <FaRetweet />
             </div>
-            <div>
-              <CiHeart />
+            <div className=" flex gap-1 items-center">
+              <div
+                className={`${likedByCurrUser != -1 ? "text-red-800 " : ""}`}
+              >
+                <CiHeart onClick={() => handleUpdateLike(data.id)} />
+              </div>
+              <div className=" text-sm">{data.likes.length}</div>
             </div>
             <div>
               <CiBookmark />

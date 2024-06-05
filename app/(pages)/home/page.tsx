@@ -21,6 +21,7 @@ export default function Home() {
   if (!user) {
     redirect("/");
   }
+  console.log(user, "  curr user obbbbbbbb");
   const [imageURL, setImageURL] = useState("");
   const handleImageChangeFile = useCallback((input: HTMLInputElement) => {
     return async (event: Event) => {
@@ -131,7 +132,9 @@ export default function Home() {
           </div>
         </div>
         {tweets.map((tweet) =>
-          tweet ? <FeedCard key={tweet?.id} data={tweet} /> : null
+          tweet ? (
+            <FeedCard key={tweet?.id} data={tweet} currUserId={user.id} />
+          ) : null
         )}
       </div>
       <div className=" hidden sm:block col-span-3 p-3  border-gray-600 border-r-[1px] border-l-[1px]">

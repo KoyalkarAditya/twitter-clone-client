@@ -22,6 +22,7 @@ export type Mutation = {
   deleteTweet?: Maybe<Scalars['Boolean']['output']>;
   followUser?: Maybe<Scalars['Boolean']['output']>;
   unfollowUser?: Maybe<Scalars['Boolean']['output']>;
+  updateLike?: Maybe<Scalars['Boolean']['output']>;
 };
 
 
@@ -42,6 +43,11 @@ export type MutationFollowUserArgs = {
 
 export type MutationUnfollowUserArgs = {
   to: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateLikeArgs = {
+  tweetId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -75,6 +81,7 @@ export type Tweet = {
   content: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   imageURL?: Maybe<Scalars['String']['output']>;
+  likes: Array<User>;
 };
 
 export type User = {
