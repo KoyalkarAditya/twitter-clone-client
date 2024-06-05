@@ -36,6 +36,13 @@ export const getCurrentUserQuery = `#graphql
           lastName,
           profileImageURL
         }
+        likes
+        {
+          id
+          firstName
+          lastName
+          profileImageURL
+        }
       }
       recommendedUsers
       {
@@ -76,6 +83,13 @@ query GetUserById($id : ID!){
           id
           firstName,
           lastName,
+          profileImageURL
+        }
+         likes
+        {
+          id
+          firstName
+          lastName
           profileImageURL
         }
       }

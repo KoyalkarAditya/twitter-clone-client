@@ -21,7 +21,6 @@ export default function Home() {
   if (!user) {
     redirect("/");
   }
-  console.log(user, "  curr user obbbbbbbb");
   const [imageURL, setImageURL] = useState("");
   const handleImageChangeFile = useCallback((input: HTMLInputElement) => {
     return async (event: Event) => {

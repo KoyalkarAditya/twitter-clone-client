@@ -136,7 +136,7 @@ export default function ProfilePage() {
       <div>
         {user?.tweets?.map((tweet) => (
           <div key={tweet?.id} className=" flex justify-between">
-            <FeedCard data={tweet as Tweet} />
+            <FeedCard data={tweet as Tweet} currUserId={currUser?.id} />
             <div
               onClick={() => {
                 if (selectedTweetId === tweet?.id) {
